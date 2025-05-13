@@ -1,6 +1,6 @@
-import http from "http";
-import { URL } from "node:url";
-import fs from "fs/promises";
+const express = require("express");
+const app = express();
+const PORT = process.env.PORT || 8080;
 
 async function getData(newURL, req, res) {
   try {
@@ -18,11 +18,10 @@ async function getData(newURL, req, res) {
   }
 }
 
-const server = http.createServer((req, res) => {
-  let newURL = new URL(req.url, `http://${req.headers.host}`);
-  getData(newURL, req, res);
+app.get("/", (req, res) => {
+  res.send("Hello");
 });
 
-server.listen(8080, () => {
-  console.log("node server started at http://localhost:8080");
+app.listen(PORT, () => {
+  console.log(`node server started at http://localhost:${PORT}`);
 });
